@@ -1,6 +1,6 @@
 # Pre-requisites
 
-- Java 11.0.2^
+- Java 8.0.xxx
 - Gradle 5.1
 
 # How to run the code
