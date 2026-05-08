@@ -1,18 +1,23 @@
 package com.example.metroCard.service;
 
+import com.example.metroCard.interfaces.IJourneyService;
+import com.example.metroCard.interfaces.IMetroCardService;
+import com.example.metroCard.interfaces.IStationService;
 import com.example.metroCard.model.Journey;
 import com.example.metroCard.model.MetroCard;
 import com.example.metroCard.model.PassengerType;
 import com.example.metroCard.model.Station;
 
-public class JourneyService {
+public class JourneyService implements IJourneyService {
     private static final double SERVICE_FEE_PERCENTAGE = 0.02;
     private static final double RETURN_DISCOUNT = 0.5;
 
-    private final StationService stationService;
+    private final IStationService stationService;
+    private final IMetroCardService cardService;
 
-    public JourneyService(StationService stationService) {
+    public JourneyService(IStationService stationService, IMetroCardService cardService) {
         this.stationService = stationService;
+        this.cardService = cardService;
     }
 
     public void processJourney(Journey journey) {
@@ -20,8 +25,8 @@ public class JourneyService {
         PassengerType passengerType = journey.getPassengerType();
         Station fromStation = journey.getFromStation();
 
-        boolean isReturnJourney = (fromStation == Station.CENTRAL && card.hasTraveledFromAirport()) ||
-                (fromStation == Station.AIRPORT && card.hasTraveledFromCentral());
+        boolean isReturnJourney = (fromStation == Station.CENTRAL && card.getHasTraveledFromAirport()) ||
+                (fromStation == Station.AIRPORT && card.getHasTraveledFromCentral());
 
         double fare = calculateFare(card, passengerType, fromStation, isReturnJourney);
         double serviceFee = 0;
@@ -30,7 +35,7 @@ public class JourneyService {
             serviceFee = rechargeCard(card, fare);
         }
 
-        card.deductBalance(fare + serviceFee);
+        cardService.deductCardBalance(card.getCardNumber(), fare + serviceFee);
         stationService.updateStationStats(fromStation, passengerType, fare, serviceFee);
         updateJourneyHistory(card, fromStation, isReturnJourney);
     }
@@ -46,7 +51,7 @@ public class JourneyService {
         double amountToRecharge = requiredFare - card.getBalance();
         double serviceFee = amountToRecharge * SERVICE_FEE_PERCENTAGE;
 
-        card.addBalance(amountToRecharge + serviceFee);
+        cardService.addBalance(card.getCardNumber(), amountToRecharge + serviceFee);
         return serviceFee;
     }
 

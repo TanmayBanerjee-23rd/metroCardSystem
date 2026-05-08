@@ -21,19 +21,15 @@ public class MetroCard {
         return balance;
     }
 
-    public void deductBalance(double amount) {
-        this.balance -= amount;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
-    public void addBalance(double amount) {
-        this.balance += amount;
-    }
-
-    public boolean hasTraveledFromCentral() {
+    public boolean getHasTraveledFromCentral() {
         return hasTraveledFromCentral;
     }
 
-    public boolean hasTraveledFromAirport() {
+    public boolean getHasTraveledFromAirport() {
         return hasTraveledFromAirport;
     }
 

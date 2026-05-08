@@ -1,8 +1,9 @@
 package com.example.metroCard.service;
 
+import com.example.metroCard.interfaces.ISummaryService;
 import com.example.metroCard.model.Station;
 
-public class SummaryService {
+public class SummaryService implements ISummaryService {
     public void printSummary() {
         for (Station station : Station.values()) {
             System.out.println("TOTAL_COLLECTION " + station + " " +

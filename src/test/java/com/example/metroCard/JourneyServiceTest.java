@@ -28,7 +28,7 @@ class JourneyServiceTest {
         Journey journey = new Journey(card, PassengerType.ADULT, Station.CENTRAL);
         journeyService.processJourney(journey);
         assertEquals(100.0, card.getBalance());
-        assertTrue(card.hasTraveledFromCentral());
+        assertTrue(card.getHasTraveledFromCentral());
     }
 
     @Test

@@ -1,5 +1,8 @@
 package com.example.metroCard.processor;
 
+import com.example.metroCard.interfaces.IJourneyService;
+import com.example.metroCard.interfaces.IMetroCardService;
+import com.example.metroCard.interfaces.ISummaryService;
 import com.example.metroCard.model.Journey;
 import com.example.metroCard.model.PassengerType;
 import com.example.metroCard.model.Station;
@@ -9,14 +12,14 @@ import com.example.metroCard.service.StationService;
 import com.example.metroCard.service.SummaryService;
 
 public class CommandProcessor {
-    private final MetroCardService cardService;
-    private final JourneyService journeyService;
-    private final SummaryService summaryService;
+    private final IMetroCardService cardService;
+    private final IJourneyService journeyService;
+    private final ISummaryService summaryService;
 
     public CommandProcessor() {
         this.cardService = new MetroCardService();
         StationService stationService = new StationService();
-        this.journeyService = new JourneyService(stationService);
+        this.journeyService = new JourneyService(stationService, cardService);
         this.summaryService = new SummaryService();
     }
 

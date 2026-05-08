@@ -20,18 +20,6 @@ public enum Station {
         }
     }
 
-    public void addCollection(double amount) {
-        this.totalCollection += amount;
-    }
-
-    public void addDiscount(double amount) {
-        this.totalDiscount += amount;
-    }
-
-    public void incrementPassengerCount(PassengerType type) {
-        passengerCount.put(type, passengerCount.getOrDefault(type, 0) + 1);
-    }
-
     public double getTotalCollection() {
         return totalCollection;
     }
@@ -42,5 +30,17 @@ public enum Station {
 
     public Map<PassengerType, Integer> getPassengerCount() {
         return Collections.unmodifiableMap(passengerCount);
+    }
+
+    public void setTotalCollection(double totalCollection) {
+        this.totalCollection = totalCollection;
+    }
+
+    public void setTotalDiscount(double totalDiscount) {
+        this.totalDiscount = totalDiscount;
+    }
+
+    public void setPassengerTypeCount(PassengerType type, int count) {
+        this.passengerCount.put(type, count);
     }
 }
